@@ -20,11 +20,7 @@ function html (literals /* substitutions... */) {
     // the current substitution (arguments are offset by 1)
     lit = raw[i - 1]
     // Pullout the current substitution from arguments.
-    sub = arguments[i]
-
-    // Flatten arrays to strings.
-    if (Array.isArray(sub)) sub = sub.join('')
-
+    sub = normalize(arguments[i])
     // Allow safe html override by prefixing interpolation with a bang.
     // Html is sanitized by default.
     if (lit[lit.length - 1] === '!') {
@@ -42,4 +38,22 @@ function html (literals /* substitutions... */) {
   result += raw[raw.length - 1]
 
   return result
+}
+
+/**
+ * Function that normalizes the interpolation substitions.
+ * It flattens arrays and ignores nullish and falsey values.
+ * Everything else is converted to a string.
+ */
+function normalize (val) {
+  return (
+    // Ignore nullish.
+    val == null ? ''
+    // Ignore false.
+    : val === false ? ''
+    // Flatten arrays and recursively convert to strings.
+    : Array.isArray(val) ? val.map(normalize).join('')
+    // Convert value to a string.
+    : String(val)
+  )
 }

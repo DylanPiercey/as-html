@@ -6,7 +6,7 @@ var planet
 var planets
 
 test('html', function (t) {
-  t.plan(4)
+  t.plan(6)
 
   planet = 'world'
   t.equal(
@@ -33,5 +33,17 @@ test('html', function (t) {
     html`<div>!${planets.map(planet => html`<b>${planet}</b>`)}</div>`,
     '<div><b>a</b><b>b</b><b>c</b></div>',
     'supports arrays'
+  )
+
+  t.equal(
+    html`<div>Hello ${false}</div>`,
+    '<div>Hello </div>',
+    'ignores false'
+  )
+
+  t.equal(
+    html`<div>Hello ${null}</div>`,
+    '<div>Hello </div>',
+    'ignores nullish'
   )
 })
