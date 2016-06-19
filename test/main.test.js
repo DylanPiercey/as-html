@@ -30,7 +30,7 @@ test('html', function (t) {
 
   planets = ['a', 'b', 'c']
   t.equal(
-    html`<div>!${planets.map(planet => html`<b>${planet}</b>`)}</div>`,
+    html`<div>${planets.map(planet => html`<b>${planet}</b>`)}</div>`,
     '<div><b>a</b><b>b</b><b>c</b></div>',
     'supports arrays'
   )

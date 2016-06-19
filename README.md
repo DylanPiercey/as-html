@@ -39,12 +39,12 @@ html`
   <div>Hello !${planet}</div>
 ` //-> '<div>Hello crazy<planet></div>'
 
-// arrays are supported as well!
+// arrays are supported as well (automatically unescaped)!
 let planets = ['a', 'b', 'c']
 
 html`
   <div>
-    !${planets.map(planet => html`
+    ${planets.map(planet => html`
       <b>${planet}</b>
     `)}
   </div>

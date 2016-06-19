@@ -14,20 +14,21 @@ function html (literals /* substitutions... */) {
   // backslashes (\n etc.) to be interpreted
   var raw = literals.raw
   var result = ''
+  var i
+  var len
+  var sub
+  var lit
+  var safe
 
-  for (var i = 1, len = arguments.length, sub, lit; i < len; i++) {
+  for (i = 1, len = arguments.length; i < len; i++) {
     // Retrieve the literal section preceding
     // the current substitution (arguments are offset by 1)
     lit = raw[i - 1]
-    // Pullout the current substitution from arguments.
-    sub = normalize(arguments[i])
     // Allow safe html override by prefixing interpolation with a bang.
     // Html is sanitized by default.
-    if (lit[lit.length - 1] === '!') {
-      lit = lit.slice(0, -1)
-    } else {
-      sub = escapeHTML(sub)
-    }
+    safe = lit[lit.length - 1] === '!'
+    sub = normalize(arguments[i], safe)
+    if (safe) lit = lit.slice(0, -1)
 
     result += lit + sub
   }
@@ -45,7 +46,7 @@ function html (literals /* substitutions... */) {
  * It flattens arrays and ignores nullish and falsey values.
  * Everything else is converted to a string.
  */
-function normalize (val) {
+function normalize (val, safe) {
   return (
     // Ignore nullish.
     val == null ? ''
@@ -53,7 +54,9 @@ function normalize (val) {
     : val === false ? ''
     // Flatten arrays and recursively convert to strings.
     : Array.isArray(val) ? val.map(normalize).join('')
-    // Convert value to a string.
+    // Escape all unsafe values by default.
+    : safe === false ? escapeHTML(val)
+    // Convert a safe value to a string.
     : String(val)
   )
 }
