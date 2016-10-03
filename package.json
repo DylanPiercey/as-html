@@ -1,7 +1,7 @@
 {
   "name": "as-html",
   "description": "HTML templating with es6 quasi literals.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "bin": "index.js",
   "bugs": "https://github.com/DylanPiercey/as-html/issues",
