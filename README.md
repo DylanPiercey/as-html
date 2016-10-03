@@ -1,17 +1,17 @@
 # as-html
-Simple html templates with es6 quasi literals.
+Simple html templates with es6 quasi literals. You can also minify the templates using [babel-plugin-as-html](https://github.com/DylanPiercey/babel-plugin-as-html).
 
 Inspired by http://www.2ality.com/2015/01/template-strings-html.html.
 
 
-# Installation
+## Installation
 
 #### Npm
 ```console
-npm install as-html
+$ npm install as-html
 ```
 
-# Example
+## Example
 
 ```javascript
 // commonjs
